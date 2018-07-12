@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "target": "es5",
+    "lib": ["dom", "es2016"],
+    "module": "commonjs"
+  }
+}
