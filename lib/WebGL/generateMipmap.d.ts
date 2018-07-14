@@ -8,4 +8,4 @@ export interface generateMipmapOptions {
     width: number;
     height: number;
 }
-export declare function generateMipmap(gl: WebGLRenderingContext, texture: WebGLTexture, opts: Partial<generateMipmapOptions>): WebGLTexture;
+export declare function generateMipmap(gl: WebGLRenderingContext, texture: WebGLTexture, opts?: Partial<generateMipmapOptions>): WebGLTexture;

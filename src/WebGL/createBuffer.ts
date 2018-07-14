@@ -11,7 +11,7 @@ function getBufferType(arrayType: string): number {
   }
 }
 
-export function createBuffer(gl: WebGLRenderingContext, data: TypedArray, itemSize: number, drawMode: number): Buffer {
+export function createBuffer(gl: WebGLRenderingContext, data: TypedArray, itemSize: number, drawMode?: number): Buffer {
   const buffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(gl.ARRAY_BUFFER, data, drawMode || gl.STATIC_DRAW);

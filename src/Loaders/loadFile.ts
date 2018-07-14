@@ -1,6 +1,6 @@
 export function loadFile(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open('GET', url);
     
     request.overrideMimeType("text/plain")

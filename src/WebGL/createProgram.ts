@@ -11,7 +11,7 @@ function compileShader(gl: WebGLRenderingContext, type: number, src: string): We
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS) && !gl.isContextLost()) {
     let lineNum = 1;
     
-    const shaderSrc = src.split("\n").reduce(function(str, line) {
+    const shaderSrc = src.split("\n").reduce((str, line) => {
       return str + "\n" + (lineNum++) + '. ' + line;
     }, '');
     
@@ -38,7 +38,7 @@ function getUniformMethod(gl: WebGLRenderingContext, type: number, size: number)
 }
 
 function createAttribute(gl: WebGLRenderingContext, program: WebGLProgram, info: WebGLActiveInfo): ShaderAttribute {
-  var location = gl.getAttribLocation(program, info.name);
+  const location = gl.getAttribLocation(program, info.name);
   
   return {
     set: (val: Buffer) => {
@@ -50,9 +50,10 @@ function createAttribute(gl: WebGLRenderingContext, program: WebGLProgram, info:
 }
 
 function createUniform(gl: WebGLRenderingContext, program: WebGLProgram, info: WebGLActiveInfo, textureIndex: number): ShaderUniform {
-  var setMethod = getUniformMethod(gl, info.type, info.size),
-    location = gl.getUniformLocation(program, info.name),
-    set;
+  const setMethod = getUniformMethod(gl, info.type, info.size),
+    location = gl.getUniformLocation(program, info.name);
+  
+  let set;
   
   if (info.type === gl.SAMPLER_2D) {
     set = (val: WebGLTexture) => {
@@ -92,7 +93,7 @@ export function createProgram(gl: WebGLRenderingContext, vertexSrc: string, frag
     uniforms: Record<string, ShaderUniform> = {},
     textureIndex = 0;
 
-  for (var i=0; i<numUniforms; i++) {
+  for (let i=0; i<numUniforms; i++) {
     const info = gl.getActiveUniform(shaderProgram, i);
     
     uniforms[info.name] = createUniform(gl, shaderProgram, info, textureIndex);
@@ -102,8 +103,8 @@ export function createProgram(gl: WebGLRenderingContext, vertexSrc: string, frag
     }
   }
   
-  for (var i=0; i<numAttributes; i++) {
-    var info = gl.getActiveAttrib(shaderProgram, i);
+  for (let i=0; i<numAttributes; i++) {
+    let info = gl.getActiveAttrib(shaderProgram, i);
     attributes[info.name] = createAttribute(gl, shaderProgram, info);
   }
   
@@ -111,15 +112,15 @@ export function createProgram(gl: WebGLRenderingContext, vertexSrc: string, frag
     program: shaderProgram,
     uniforms: uniforms,
     attributes: attributes,
-    setUniforms: function(hash: Record<string, any>) {
-      for (var name in hash) {
+    setUniforms: (hash: Record<string, any>) => {
+      for (let name in hash) {
         if (name in uniforms) {
           uniforms[name].set(hash[name]);
         }
       }
     },
-    setAttributes: function(hash: Record<string, Buffer>) {
-      for (var name in hash) {
+    setAttributes: (hash: Record<string, Buffer>) => {
+      for (let name in hash) {
         if (name in attributes) {
           attributes[name].set(hash[name]);
         }

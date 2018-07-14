@@ -8,7 +8,7 @@ export function convertTrianglesToBufferArrays(triangles: Array<Triangle>): ObjB
     lastIndex = 0;
   
   //to simplify the shape as much as we can, group the vertices for the triangles
-  triangles.forEach(function(triangle) {
+  triangles.forEach((triangle) => {
     const p1 = triangle.p1,
       p2 = triangle.p2,
       p3 = triangle.p3;

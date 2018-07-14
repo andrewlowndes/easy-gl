@@ -12,4 +12,4 @@ export interface createTextureOptions {
     width: number;
     height: number;
 }
-export declare function createTexture(gl: WebGLRenderingContext, opts: Partial<createTextureOptions>): WebGLTexture;
+export declare function createTexture(gl: WebGLRenderingContext, opts?: Partial<createTextureOptions>): WebGLTexture;

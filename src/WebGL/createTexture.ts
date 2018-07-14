@@ -29,13 +29,13 @@ const defaultOptions = {
   height: 0
 };
 
-export function createTexture(gl: WebGLRenderingContext, opts: Partial<createTextureOptions>): WebGLTexture {
+export function createTexture(gl: WebGLRenderingContext, opts?: Partial<createTextureOptions>): WebGLTexture {
   opts = {
     ...defaultOptions,
     ...opts
   };
   
-  var texture = gl.createTexture();
+  const texture = gl.createTexture();
   
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, opts.flipY);

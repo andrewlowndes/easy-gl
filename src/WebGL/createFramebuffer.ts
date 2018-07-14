@@ -23,7 +23,7 @@ const defaultOptions = {
   wrapT: WebGLRenderingContext.CLAMP_TO_EDGE,
 };
 
-export function createFramebuffer(gl: WebGLRenderingContext, opts: Partial<createFramebufferOptions>): Framebuffer {
+export function createFramebuffer(gl: WebGLRenderingContext, opts?: Partial<createFramebufferOptions>): Framebuffer {
   opts = {
     ...defaultOptions,
     ...opts

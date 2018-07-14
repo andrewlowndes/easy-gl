@@ -23,7 +23,7 @@ const regex: Record<string, RegExp> = {
 };
 
 function assignMatchVec3(line: string, regexp: RegExp, obj: Material, objKey: string) {
-  var matches = line.match(regexp);
+  const matches = line.match(regexp);
   
   if (matches) {
     obj[objKey as keyof Material] = vec3.fromValues(parseFloat(matches[1]), parseFloat(matches[2]), parseFloat(matches[3]));
@@ -33,7 +33,7 @@ function assignMatchVec3(line: string, regexp: RegExp, obj: Material, objKey: st
 }
 
 function assignMatchVal(line: string, regexp: RegExp, obj: Material, objKey: string) {
-  var matches = line.match(regexp);
+  const matches = line.match(regexp);
   
   if (matches) {
     obj[objKey as keyof Material] = matches[1];
@@ -43,12 +43,11 @@ function assignMatchVal(line: string, regexp: RegExp, obj: Material, objKey: str
 }
 
 export async function loadMtl(url: string): Promise<Record<string, Material>> {
-  const fileContents = await loadFile(url);
+  const fileContents = await loadFile(url),
+    fileLines = fileContents.split("\n"),
+    materials: Record<string, Material> = {};
 
-  var fileLines = fileContents.split("\n");
-  
-  var materials: Record<string, Material> = {},
-    currentMaterial: Material = {};
+  let currentMaterial: Material = {};
   
   fileLines.forEach((line) => {
     //newmtl

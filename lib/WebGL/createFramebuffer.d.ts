@@ -9,4 +9,4 @@ export interface createFramebufferOptions {
     wrapS: number;
     wrapT: number;
 }
-export declare function createFramebuffer(gl: WebGLRenderingContext, opts: Partial<createFramebufferOptions>): Framebuffer;
+export declare function createFramebuffer(gl: WebGLRenderingContext, opts?: Partial<createFramebufferOptions>): Framebuffer;

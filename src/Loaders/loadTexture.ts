@@ -29,16 +29,16 @@ export function loadTexture(gl: WebGLRenderingContext, url: string, opts: Partia
   
   const texture = createTexture(gl, Object.assign({ width: 1, height: 1 }, opts));
   
-  const wrap = {
+  const texObj = {
     texture: texture,
     image: image,
     width: 0,
     height: 0
   };
   
-  image.onload = function() {
-    wrap.width = image.width;
-    wrap.height = image.height;
+  image.onload = () => {
+    texObj.width = image.width;
+    texObj.height = image.height;
     
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texImage2D(gl.TEXTURE_2D, opts.level, opts.internalFormat, opts.srcFormat, opts.srcType, image);
@@ -50,5 +50,5 @@ export function loadTexture(gl: WebGLRenderingContext, url: string, opts: Partia
   
   image.src = url;
 
-  return wrap;
+  return texObj;
 }

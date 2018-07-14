@@ -39,7 +39,7 @@ export function xmlToJSON(xml: Node): any {
     if (xml.childNodes.length > 1 && allSameChildTag) {
       let arr: Array<any> = [];
     
-      for(var i=0; i<elementChildNodes.length; i++) {
+      for(let i=0; i<elementChildNodes.length; i++) {
         let item = elementChildNodes[i]; 
         arr.push(xmlToJSON(item));
       }
@@ -49,7 +49,7 @@ export function xmlToJSON(xml: Node): any {
     
     let obj: Record<string, any> = {};
     
-    for(var i=0; i<elementChildNodes.length; i++) {
+    for(let i=0; i<elementChildNodes.length; i++) {
       let item = elementChildNodes[i];
       
       let nodeName: string = item.nodeName;

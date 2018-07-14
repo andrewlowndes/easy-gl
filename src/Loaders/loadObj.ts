@@ -68,7 +68,7 @@ export async function loadObj(url: string): Promise<Obj> {
     matches = objLine.match(regexp.group);
     
     if (matches) {
-      var groupName = matches[1];
+      const groupName = matches[1];
       
       currentObject = {
         name: groupName,
@@ -85,7 +85,7 @@ export async function loadObj(url: string): Promise<Obj> {
     matches = objLine.match(regexp.vertex);
     
     if (matches) {
-      var v1 = parseFloat(matches[1]),
+      const v1 = parseFloat(matches[1]),
         v2 = parseFloat(matches[2]),
         v3 = parseFloat(matches[3]);
       
@@ -97,7 +97,7 @@ export async function loadObj(url: string): Promise<Obj> {
     matches = objLine.match(regexp.texCoord);
     
     if (matches) {
-      var u = parseFloat(matches[1]),
+      const u = parseFloat(matches[1]),
         v = parseFloat(matches[2]);
       
       texCoords.push(vec2.fromValues(u, v));
@@ -108,7 +108,7 @@ export async function loadObj(url: string): Promise<Obj> {
     matches = objLine.match(regexp.normal);
     
     if (matches) {
-      var v1 = parseFloat(matches[1]),
+      const v1 = parseFloat(matches[1]),
         v2 = parseFloat(matches[2]),
         v3 = parseFloat(matches[3]);
       
@@ -124,9 +124,9 @@ export async function loadObj(url: string): Promise<Obj> {
     
     if (matches) {
       //identify the vertices that we can re-use across multiple triangles
-      var coordIndexes = [];
+      const coordIndexes = [];
       
-      for (var matchIndex=1, maxIndex = Math.min(4, matches.length); matchIndex<maxIndex; matchIndex++) {
+      for (let matchIndex=1, maxIndex = Math.min(4, matches.length); matchIndex<maxIndex; matchIndex++) {
         const coord = matches[matchIndex].split('/').map(mapIndex),
           coordHash = coord.join('/');
         
@@ -155,14 +155,14 @@ export async function loadObj(url: string): Promise<Obj> {
   vertexHash = null;
   
   //scale our object to fit -1 to 1 in all axis and then re-position to center
-  var maxX = Number.MIN_VALUE, 
+  let maxX = Number.MIN_VALUE, 
     maxY = Number.MIN_VALUE, 
     maxZ = Number.MIN_VALUE, 
     minX = Number.MAX_VALUE, 
     minY = Number.MAX_VALUE, 
     minZ = Number.MAX_VALUE;
   
-  positions.forEach(function(pos) {
+  positions.forEach((pos) => {
     maxX = Math.max(maxX, pos[0]);
     maxY = Math.max(maxY, pos[1]);
     maxZ = Math.max(maxZ, pos[2]);
@@ -172,7 +172,7 @@ export async function loadObj(url: string): Promise<Obj> {
     minZ = Math.min(minZ, pos[2]);
   });
   
-  var sizeX = maxX - minX,
+  const sizeX = maxX - minX,
     sizeY = maxY - minY,
     sizeZ = maxZ - minZ,
     centerX = sizeX / 2 + minX,
@@ -180,17 +180,17 @@ export async function loadObj(url: string): Promise<Obj> {
     centerZ = sizeZ / 2 + minZ;
   
   //center the object to zero first
-  positions.forEach(function(pos) {
+  positions.forEach((pos) => {
     pos[0] -= centerX;
     pos[1] -= centerY;
     pos[2] -= centerZ;
   });
   
   //then scale down each axis by an factor
-  var size = Math.max(sizeX, Math.max(sizeY, sizeZ)),
+  const size = Math.max(sizeX, Math.max(sizeY, sizeZ)),
     downscaleFactor = 1 / size;
   
-  positions.forEach(function(pos) {
+  positions.forEach((pos) => {
     pos[0] *= downscaleFactor;
     pos[1] *= downscaleFactor;
     pos[2] *= downscaleFactor;

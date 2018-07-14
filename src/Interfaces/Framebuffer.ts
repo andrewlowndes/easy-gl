@@ -3,5 +3,5 @@ export interface Framebuffer {
   height: number;
   framebuffer: WebGLFramebuffer;
   texture: WebGLTexture;
-  depthStencilTexture: WebGLTexture;
+  depthStencilTexture?: WebGLTexture;
 }

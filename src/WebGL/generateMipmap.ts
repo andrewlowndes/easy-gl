@@ -22,7 +22,7 @@ const defaultOptions: generateMipmapOptions = {
   height: 0
 };
 
-export function generateMipmap(gl: WebGLRenderingContext, texture: WebGLTexture, opts: Partial<generateMipmapOptions>): WebGLTexture {
+export function generateMipmap(gl: WebGLRenderingContext, texture: WebGLTexture, opts?: Partial<generateMipmapOptions>): WebGLTexture {
   opts = {
     ...defaultOptions,
     ...opts
