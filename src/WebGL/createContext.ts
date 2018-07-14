@@ -1,4 +1,4 @@
-export function createContext(canvas: HTMLCanvasElement, opts: WebGLContextAttributes, extensions: Array<string>): WebGLRenderingContext {
+export function createContext(canvas: HTMLCanvasElement, opts?: WebGLContextAttributes, extensions?: Array<string>): WebGLRenderingContext {
   let gl: WebGLRenderingContext;
   
   const pixelRatio = window.devicePixelRatio || 1,
