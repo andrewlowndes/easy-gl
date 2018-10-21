@@ -8,6 +8,7 @@ export interface loadTextureOptions extends Partial<generateMipmapOptions> {
   srcFormat: number;
   srcType: number;
   mipmap: boolean;
+  premultiplyAlpha: boolean;
 }
 
 const defaultOptions: loadTextureOptions = {
@@ -16,7 +17,8 @@ const defaultOptions: loadTextureOptions = {
   border: 0,
   srcFormat: WebGLRenderingContext.RGBA,
   srcType: WebGLRenderingContext.UNSIGNED_BYTE,
-  mipmap: false
+  mipmap: false,
+  premultiplyAlpha: true
 };
 
 export function loadTexture(gl: WebGLRenderingContext, url: string, opts: Partial<loadTextureOptions>) {

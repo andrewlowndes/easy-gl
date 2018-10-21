@@ -6,6 +6,7 @@ export interface loadTextureOptions extends Partial<generateMipmapOptions> {
     srcFormat: number;
     srcType: number;
     mipmap: boolean;
+    premultiplyAlpha: boolean;
 }
 export declare function loadTexture(gl: WebGLRenderingContext, url: string, opts: Partial<loadTextureOptions>): {
     texture: WebGLTexture;
