@@ -12,9 +12,10 @@ export interface createTextureOptions {
   srcType: number;
   width: number;
   height: number;
+  premultiplyAlpha: boolean;
 }
 
-const defaultOptions = {
+export const defaultOptions = {
   minFilter: WebGLRenderingContext.LINEAR,
   magFilter: WebGLRenderingContext.LINEAR,
   wrapS: WebGLRenderingContext.CLAMP_TO_EDGE,
@@ -26,7 +27,8 @@ const defaultOptions = {
   srcFormat: WebGLRenderingContext.RGBA,
   srcType: WebGLRenderingContext.UNSIGNED_BYTE,
   width: 0,
-  height: 0
+  height: 0,
+  premultiplyAlpha: true
 };
 
 export function createTexture(gl: WebGLRenderingContext, opts?: Partial<createTextureOptions>): WebGLTexture {
@@ -38,7 +40,8 @@ export function createTexture(gl: WebGLRenderingContext, opts?: Partial<createTe
   const texture = gl.createTexture();
   
   gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, opts.flipY);
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, opts.flipY ? 1 : 0);
+  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, opts.premultiplyAlpha ? 1 : 0);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, opts.wrapS);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, opts.wrapT);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, opts.minFilter);
