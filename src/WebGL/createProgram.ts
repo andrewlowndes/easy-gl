@@ -21,19 +21,22 @@ function compileShader(gl: WebGLRenderingContext, type: number, src: string): We
   return shader;
 }
 
+type Float32List = Float32Array | Array<number>;
+type Int32List = Array<number>;
+
 function getUniformMethod(gl: WebGLRenderingContext, type: number, size: number): (loc: WebGLUniformLocation, val: any, transpose?: boolean) => void {
   switch (type) {
-    case gl.FLOAT: return (size > 1 ? gl.uniform1fv : gl.uniform1f);
-    case gl.FLOAT_VEC2: return gl.uniform2fv;
-    case gl.FLOAT_VEC3: return gl.uniform3fv;
-    case gl.FLOAT_VEC4: return gl.uniform4fv;
-    case gl.FLOAT_MAT2: return (loc: WebGLUniformLocation, val: Float32Array | ArrayLike<number>, transpose?: boolean) => gl.uniformMatrix2fv(loc, transpose, val);
-    case gl.FLOAT_MAT3: return (loc: WebGLUniformLocation, val: Float32Array | ArrayLike<number>, transpose?: boolean) => gl.uniformMatrix3fv(loc, transpose, val);
-    case gl.FLOAT_MAT4: return (loc: WebGLUniformLocation, val: Float32Array | ArrayLike<number>, transpose?: boolean) => gl.uniformMatrix4fv(loc, transpose, val);
-    default: case gl.INT: return (size > 1 ? gl.uniform1iv : gl.uniform1i);
-    case gl.INT_VEC2: return gl.uniform2iv;
-    case gl.INT_VEC3: return gl.uniform3iv;
-    case gl.INT_VEC4: return gl.uniform4fv;
+    case gl.FLOAT: return (size > 1 ? (loc: WebGLUniformLocation, val: Float32List) => gl.uniform1fv(loc, val) : (loc: WebGLUniformLocation, val: number) => gl.uniform1f(loc, val));
+    case gl.FLOAT_VEC2: return (loc: WebGLUniformLocation, val: Float32List) => gl.uniform2fv(loc, val);
+    case gl.FLOAT_VEC3: return (loc: WebGLUniformLocation, val: Float32List) => gl.uniform3fv(loc, val);
+    case gl.FLOAT_VEC4: return (loc: WebGLUniformLocation, val: Float32List) => gl.uniform4fv(loc, val);
+    case gl.FLOAT_MAT2: return (loc: WebGLUniformLocation, val: Float32List, transpose?: boolean) => gl.uniformMatrix2fv(loc, transpose, val);
+    case gl.FLOAT_MAT3: return (loc: WebGLUniformLocation, val: Float32List, transpose?: boolean) => gl.uniformMatrix3fv(loc, transpose, val);
+    case gl.FLOAT_MAT4: return (loc: WebGLUniformLocation, val: Float32List, transpose?: boolean) => gl.uniformMatrix4fv(loc, transpose, val);
+    default: case gl.INT: return (size > 1 ? (loc: WebGLUniformLocation, val: Int32List) => gl.uniform1iv(loc, val) : (loc: WebGLUniformLocation, val: number) => gl.uniform1i(loc, val));
+    case gl.INT_VEC2: return (loc: WebGLUniformLocation, val: Int32List) => gl.uniform2iv(loc, val);
+    case gl.INT_VEC3: return (loc: WebGLUniformLocation, val: Int32List) => gl.uniform3iv(loc, val);
+    case gl.INT_VEC4: return (loc: WebGLUniformLocation, val: Int32List) => gl.uniform4fv(loc, val);
   };
 }
 
@@ -54,6 +57,10 @@ function createUniform(gl: WebGLRenderingContext, program: WebGLProgram, info: W
     location = gl.getUniformLocation(program, info.name);
   
   let set;
+
+  if (!location) {
+    throw new Error('Could not get uniform location for: ' + info.name);
+  }
   
   if (info.type === gl.SAMPLER_2D) {
     set = (val: WebGLTexture) => {
@@ -62,7 +69,9 @@ function createUniform(gl: WebGLRenderingContext, program: WebGLProgram, info: W
       gl.uniform1i(location, textureIndex);
     };
   } else {
-    set = (val: ArrayLike<number>) => setMethod(location, val);
+    set = (val: ArrayLike<number> | number) => {
+      setMethod(location, val);
+    }
   }
   
   return {
