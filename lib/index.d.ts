@@ -29,6 +29,7 @@ export { framebufferToImage } from './Util/framebufferToImage';
 export { isPowerOf2 } from './Util/isPowerOf2';
 export { mergeObjBuffers } from './Util/mergeObjBuffers';
 export { xmlToJSON } from './Util/xmlToJson';
+export { canvasToTexture, canvasToTextureOptions } from './Util/canvasToTexture';
 export { createBuffer } from './WebGL/createBuffer';
 export { createContext } from './WebGL/createContext';
 export { createElementBuffer } from './WebGL/createElementBuffer';
